@@ -13,10 +13,9 @@ export function Sidebar() {
     ];
 
     return (
-        <div className="relative flex h-screen flex-shrink-0">
+        <div className="relative flex h-screen flex-shrink-0 overflow-hidden">
             {/* Container chính của Sidebar */}
-            <aside className={` 
-                bg-white border-gray-100 flex flex-col justify-between p-6 
+            <aside className={`bg-white border-gray-100 flex flex-col justify-between p-6 
                 transition-all duration-300
 
                 /* Responsive Mobile Sidebar*/
@@ -24,7 +23,7 @@ export function Sidebar() {
                 ${isCollapsed ? '-translate-x-full' : 'translate-x-0'}
 
                 /* Responsive PC Sidebar*/
-                md:relative md:translate-x-0 md:inset-auto md:z-10
+                 md:relative md:translate-x-0 md:inset-auto md:z-10 md:h-screen
                 ${isCollapsed ? 'md:w-20' : 'md:w-64'}
             `}>
 
@@ -70,10 +69,9 @@ export function Sidebar() {
                             <p className="text-xs text-gray-400 mt-0.5">Intern IT K2026</p>
                         </div>
                     )}
-                </div>
-                {/* Nút mũi tên đóng/mở bám ở mép viền bên phải */}
-
+                </div> 
             </aside>
+            {/* Nút mũi tên đóng/mở bám ở mép viền bên phải */}
             <button
                 onClick={() => setIsCollapsed(!isCollapsed)}
                 className={` fixed top-12 z-50 w-9 h-9 bg-white border border-gray-200 text-gray-400 rounded-full flex items-center justify-center shadow-sm transition-all duration-300

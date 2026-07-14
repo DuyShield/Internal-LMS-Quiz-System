@@ -1,41 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Topbar from '../compoments/common/topBar';
 import Sidebar from '../compoments/common/sideBar';
 import FilterBar from '../compoments/common/filterBar';
-
+import CardLesson from '../compoments/card/lessonsDisplay';
+import { getLessons } from '../services/lessonsService';
 function App() {
+  const [lessons, setLessons] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLessons= async () => {
+      try {
+        setLoading(true);
+
+        const data = await getLessons();
+
+        setLessons(data);
+      } catch (error) {
+        console.error("Lỗi khi fetch dữ liệu khóa học:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLessons();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center mt-10">Đang tải dữ liệu...</div>;
+  }
   return (
-    <div className="flex w-full min-h-screen bg-slate-50 text-gray-800 font-sans antialiased">
-      {/* Thanh Sidebar cố định bên trái */}
+    <div className="flex w-full h-screen overflow-hidden bg-slate-50 text-gray-800 font-sans antialiased">
+      {/* Sidebar */}
       <Sidebar />
-      
-      {/*Vùng hiển thị nội dung chính bên phải */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Topbar */}
+      <Topbar />
       <main className="flex-1 p-4 overflow-y-auto">
-        {/* Phần Header của trang */}
-        <div className="mb-4">
-            <Topbar />
-        </div>
         {/* Phần Filter */}
         <div className="mb-4">
-            <FilterBar />
+          <FilterBar />
         </div>
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-          {/* Phần hiển thị nội dung mẫu */}
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm col-span-2">
-            <h3 className="font-semibold text-lg mb-4">Tiến độ học tập</h3>
-            <div className="h-48 bg-slate-50 rounded-xl flex items-center justify-center text-gray-400">
-              [Biểu đồ hoặc Nội dung tiến độ sẽ code ở đây]
-            </div>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-            <h3 className="font-semibold text-lg mb-4">Bài kiểm tra sắp tới</h3>
-            <p className="text-sm text-gray-500">Bạn không có bài kiểm tra nào trong hôm nay.</p>
-          </div>
+          {/* Main information */}
+          {lessons.map((lesson) => (
+            <CardLesson
+              key={lesson.id}
+              title={lesson.title}
+              description={lesson.description}
+              category={lesson.category}
+              difficulty={lesson.difficulty}
+              progress={lesson.progress}
+              isCompleted={lesson.isCompleted}
+            />
+          ))}
         </div>
       </main>
+      </div>
     </div>
   );
 }
