@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+.bg-brand {
+    background-color: #1a73e8;
+}
+.bg-brand:hover {
+    background-color: #1a73e8af;
+}
