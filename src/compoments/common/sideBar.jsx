@@ -13,7 +13,7 @@ export function Sidebar() {
     ];
 
     return (
-        <div className="relative flex h-screen flex-shrink-0 overflow-hidden">
+        <div className="relative flex h-screen flex-shrink-0">
             {/* Container chính của Sidebar */}
             <aside className={`bg-white border-gray-100 flex flex-col justify-between p-6 
                 transition-all duration-300

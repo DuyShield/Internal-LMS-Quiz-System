@@ -1,0 +1,77 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Nguyễn Văn A",
+      "email": "vana@gmail.com",
+      "password": "123456",
+      "avatar": "/images/avatar1.png",
+      "department": "Frontend",
+      "position": "Intern",
+      "phone": "0901234567",
+      "joinDate": "2026-07-01",
+      "status": true
+    }
+  ],
+  "courses": [],
+  "lessons": [
+    {
+      "id": 1,
+      "title": "HTML & CSS Fundamentals",
+      "description": "Nền tảng HTML5 và CSS3 hiện đại, tự tin xây dựng giao diện web.",
+      "category": "Frontend",
+      "difficulty": "Dễ",
+      "progress": 100,
+      "isCompleted": true
+    },
+    {
+      "id": 2,
+      "title": "ReactJS cho người mới bắt đầu",
+      "description": "Làm chủ Component, Hooks, State và cách tư duy component trong React.",
+      "category": "Frontend",
+      "difficulty": "Trung bình",
+      "progress": 45,
+      "isCompleted": false
+    },
+    {
+      "id": 3,
+      "title": "Next.js 14 E-Commerce",
+      "description": "Xây dựng website bán hàng chuẩn SEO với Server Components.",
+      "category": "Frontend",
+      "difficulty": "Khó",
+      "progress": 0,
+      "isCompleted": false
+    },
+    {
+      "id": 4,
+      "title": "Node.js & Express RESTful API",
+      "description": "Thiết kế hệ thống Backend vững chắc, kết nối cơ sở dữ liệu MongoDB.",
+      "category": "Backend",
+      "difficulty": "Khó",
+      "progress": 85,
+      "isCompleted": false
+    },
+    {
+      "id": 5,
+      "title": "UI/UX Mobile Design với Figma",
+      "description": "Học cách nghiên cứu trải nghiệm và thiết kế prototype ứng dụng di động.",
+      "category": "Design",
+      "difficulty": "Dễ",
+      "progress": 100,
+      "isCompleted": true
+    },
+    {
+      "id": 6,
+      "title": "TypeScript Core Concepts",
+      "description": "Nâng cấp kỹ năng viết code JavaScript an toàn, giảm thiểu tối đa lỗi runtime.",
+      "category": "Language",
+      "difficulty": "Trung bình",
+      "progress": 20,
+      "isCompleted": false
+    }
+  ],
+  "quizzes": [],
+  "questions": [],
+  "quizResults": [],
+  "learningHistory": []
+}
