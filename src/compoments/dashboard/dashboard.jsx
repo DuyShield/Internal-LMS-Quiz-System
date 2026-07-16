@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Monitor, Clock3, Star } from "lucide-react";
+import { getStatCards } from "../card/statsCard";
 
 const Dashboard = () => {
     const [dashboard, setDashboard] = useState({
@@ -9,36 +9,8 @@ const Dashboard = () => {
         averageScore: 8.5,
     });
 
-
-    const statCards = [
-        {
-            id: 1,
-            title: "Tổng quan bài quiz đã làm",
-            value: dashboard.totalQuizDone,
-            unit: "bài",
-            icon: <Monitor size={24} />,
-            bg: "bg-blue-100",
-            color: "text-blue-600",
-        },
-        {
-            id: 2,
-            title: "Số giờ thực tập",
-            value: dashboard.practiceHours,
-            unit: "giờ",
-            icon: <Clock3 size={24} />,
-            bg: "bg-yellow-100",
-            color: "text-yellow-600",
-        },
-        {
-            id: 3,
-            title: "Điểm trung bình",
-            value: dashboard.averageScore,
-            unit: "đ",
-            icon: <Star size={24} />,
-            bg: "bg-orange-100",
-            color: "text-orange-500",
-        },
-    ];
+    const statCards = getStatCards(dashboard);
+    
 
     return (
         <div className="p-6 space-y-6">
