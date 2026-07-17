@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProfileHeader from "./profileHeader";
-import { getStatCards } from "../card/statsCard";
+import { getStatCards } from "../../compoments/card/statsCard";
 import { BookOpen, Clock3, Star } from "lucide-react";
 
 export default function Profile() {

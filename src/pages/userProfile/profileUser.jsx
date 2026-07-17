@@ -1,8 +1,8 @@
 import React from 'react'
-import Topbar from '../compoments/common/topBar';
-import Sidebar from '../compoments/common/sideBar';
-import FilterBar from '../compoments/common/filterBar';
-import Dashboard from '../compoments/dashboard/dashboard';
+import Topbar from '../../compoments/common/topBar';
+import Sidebar from '../../compoments/common/sideBar';
+import FilterBar from '../../compoments/common/filterBar';
+import Profile from './profile';
 export default function Display() {
   return (
     <div>
@@ -17,7 +17,7 @@ export default function Display() {
           <Topbar />
           <main className="flex-1 p-4 overflow-y-auto">
             {/* Main information */}
-            <Dashboard />
+            <Profile></Profile>
           </main>
         </div>
       </div>

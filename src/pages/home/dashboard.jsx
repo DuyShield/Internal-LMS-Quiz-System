@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getStatCards } from "../card/statsCard";
+import { getStatCards } from "../../compoments/card/statsCard";
 
 const Dashboard = () => {
     const [dashboard, setDashboard] = useState({

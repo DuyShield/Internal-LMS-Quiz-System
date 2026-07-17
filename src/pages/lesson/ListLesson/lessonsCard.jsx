@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckIcon } from "../icon";
+import { CheckIcon } from "../../../compoments/icon";
 
 export default function Lessons({
     title = "Tên bài giảng",
