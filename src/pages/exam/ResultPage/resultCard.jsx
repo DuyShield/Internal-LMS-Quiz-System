@@ -15,7 +15,7 @@ export default function ResultCard({
     const wrongCount = totalCount - correctCount;
 
     return (
-        <div className="w-full max-w-md bg-white rounded-xl border border-gray-100 shadow-xl p-8 overflow-hidden mx-auto">
+        <div className="w-full sm:max-w-sm md:max-w-lg bg-white rounded-xl border border-gray-100 shadow-xl p-8 overflow-hidden mx-auto">
             {/* Thông tin bảng */}
             <div className="text-center flex flex-col items-center">
                 <span className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">

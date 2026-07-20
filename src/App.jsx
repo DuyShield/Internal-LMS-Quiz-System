@@ -7,6 +7,7 @@ import DetailLesson from './pages/lesson/DetailLesson/detailLesson';
 import Profile from './pages/userProfile/profileUser';
 import DetailQuiz from './pages/exam/ExamPage/examScreen';
 import ResultPage from './pages/exam/ResultPage/resultPage';
+import HistoryPage from './pages/history/historyPage';
 export default function App() {
   return (
     <div>
@@ -15,8 +16,9 @@ export default function App() {
         {/* <DetailLesson /> */}
         {/* <Profile /> */}
         {/* <ListQuizzes /> */}
-        {/* <DetailQuiz></DetailQuiz> */}
-        <ResultPage></ResultPage>
+        <DetailQuiz></DetailQuiz>
+        {/* <ResultPage></ResultPage> */}
+        {/* <HistoryPage></HistoryPage> */}
     </div>
   );
 }

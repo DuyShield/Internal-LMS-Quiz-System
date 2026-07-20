@@ -10,7 +10,7 @@ export default function QuestionNavigator({
     const unansweredCount = total - answeredCount;
 
     return (
-        <div className="w-full max-w-sm bg-white p-6 rounded-2xl border border-gray-100 shadow-md">
+        <div className="w-full lg:max-w-[360px] bg-white p-6 rounded-2xl border border-gray-100 shadow-md">
             <div className="mb-4">
                 <h3 className="font-bold text-slate-800 text-base mb-3">Bảng câu hỏi</h3>
                 {/* Chú thích */}

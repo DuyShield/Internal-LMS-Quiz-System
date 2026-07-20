@@ -4,7 +4,7 @@ import Sidebar from '../../../compoments/common/sideBar';
 import FilterBar from '../../../compoments/common/filterBar';
 import CardQuiz from './quizCard';
 import { getLessons } from '../../../services/lessonsService';
-function App() {
+function listQuizzes() {
 //   const [lessons, setLessons] = useState([]);
 //   const [loading, setLoading] = useState(true);
 
@@ -67,4 +67,4 @@ function App() {
   );
 }
 
-export default App;
+export default listQuizzes;

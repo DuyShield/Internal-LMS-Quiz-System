@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 const QuizFilter = ({ onFilterChange }) => {
-  // 1. Quản lý các State lưu giá trị bộ lọc
+  
   const [searchTerm, setSearchTerm] = useState('');
-  const [status, setStatus] = useState('all'); // 'all', 'done', 'not-done'
-  const [topic, setTopic] = useState('all');   // 'all', 'frontend', 'backend',...
+  const [status, setStatus] = useState('all'); 
+  const [topic, setTopic] = useState('all');   
 
-  // Hàm tiện ích để gửi dữ liệu lọc mới nhất lên trang cha mỗi khi có thay đổi
+  // Gửi bộ lộc mới lên cha
   const handleUpdateFilter = (updatedFields) => {
     // Gộp giá trị mới thay đổi với các giá trị cũ
     const currentFilters = {
@@ -57,7 +57,7 @@ const QuizFilter = ({ onFilterChange }) => {
         </div>
       </div>
 
-      {/* Hàng 2: Bộ lọc Chủ đề */}
+      {/* Filter */}
       <div className="flex justify-between items-center text-sm border-t border-gray-50 pt-4">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-gray-400 mr-2">Chủ đề</span>

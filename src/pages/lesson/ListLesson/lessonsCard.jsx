@@ -57,8 +57,7 @@ export default function Lessons({
                 <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
                     <div
                         className="bg-emerald-500 h-full rounded-full transition-all duration-500 ease-out"
-                        style={{ width: `${progress}%` }}
-                    />
+                        style={{ width: `${progress}%` }}/>
                 </div>
             </div>
         </div>
