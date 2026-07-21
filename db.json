@@ -13,65 +13,245 @@
       "status": true
     }
   ],
-  "courses": [],
-  "lessons": [
+
+  "courses": [
     {
       "id": 1,
-      "title": "HTML & CSS Fundamentals",
-      "description": "Nền tảng HTML5 và CSS3 hiện đại, tự tin xây dựng giao diện web.",
+      "title": "Frontend Developer",
+      "description": "Lộ trình Frontend từ cơ bản đến React.",
+      "thumbnail": "/images/frontend.jpg",
       "category": "Frontend",
-      "difficulty": "Dễ",
-      "progress": 100,
-      "isCompleted": true
+      "lessonIds": [1, 2, 3],
+      "totalLessons": 3
     },
     {
       "id": 2,
-      "title": "ReactJS cho người mới bắt đầu",
-      "description": "Làm chủ Component, Hooks, State và cách tư duy component trong React.",
-      "category": "Frontend",
-      "difficulty": "Trung bình",
-      "progress": 45,
-      "isCompleted": false
+      "title": "Backend Developer",
+      "description": "Học NodeJS và Express.",
+      "thumbnail": "/images/backend.jpg",
+      "category": "Backend",
+      "lessonIds": [4],
+      "totalLessons": 1
     },
     {
       "id": 3,
-      "title": "Next.js 14 E-Commerce",
-      "description": "Xây dựng website bán hàng chuẩn SEO với Server Components.",
-      "category": "Frontend",
-      "difficulty": "Khó",
-      "progress": 0,
-      "isCompleted": false
+      "title": "UI/UX Design",
+      "description": "Thiết kế giao diện với Figma.",
+      "thumbnail": "/images/design.jpg",
+      "category": "Design",
+      "lessonIds": [5],
+      "totalLessons": 1
     },
     {
       "id": 4,
-      "title": "Node.js & Express RESTful API",
-      "description": "Thiết kế hệ thống Backend vững chắc, kết nối cơ sở dữ liệu MongoDB.",
-      "category": "Backend",
-      "difficulty": "Khó",
-      "progress": 85,
-      "isCompleted": false
+      "title": "TypeScript",
+      "description": "TypeScript từ cơ bản đến nâng cao.",
+      "thumbnail": "/images/typescript.jpg",
+      "category": "Language",
+      "lessonIds": [6],
+      "totalLessons": 1
+    }
+  ],
+
+  "lessons": [
+  {
+    "id": 1,
+    "title": "HTML & CSS Fundamentals",
+    "description": "Nền tảng HTML5 và CSS3 hiện đại, tự tin xây dựng giao diện web.",
+    "category": "Frontend",
+    "difficulty": "Dễ",
+    "progress": 100,
+    "isCompleted": true,
+    "videoUrl": "https://www.youtube.com/watch?v=G3e-cpL7ofc"
+  },
+  {
+    "id": 2,
+    "title": "ReactJS cho người mới bắt đầu",
+    "description": "Làm chủ Component, Hooks, State và cách tư duy component trong React.",
+    "category": "Frontend",
+    "difficulty": "Trung bình",
+    "progress": 45,
+    "isCompleted": false,
+    "videoUrl": "https://www.youtube.com/watch?v=bMknfKXIFA8"
+  },
+  {
+    "id": 3,
+    "title": "Next.js 14 E-Commerce",
+    "description": "Xây dựng website bán hàng chuẩn SEO với Server Components.",
+    "category": "Frontend",
+    "difficulty": "Khó",
+    "progress": 0,
+    "isCompleted": false,
+    "duration": "3h 30m",
+    "thumbnail": "/images/nextjs.jpg",
+    "videoUrl": "https://www.youtube.com/watch?v=Zq5fmkH0T78"
+  },
+  {
+    "id": 4,
+    "title": "Node.js & Express RESTful API",
+    "description": "Thiết kế hệ thống Backend vững chắc, kết nối MongoDB.",
+    "category": "Backend",
+    "difficulty": "Khó",
+    "progress": 85,
+    "isCompleted": false,
+    "videoUrl": "https://www.youtube.com/watch?v=Oe421EPjeBE"
+  },
+  {
+    "id": 5,
+    "title": "UI/UX Mobile Design với Figma",
+    "description": "Thiết kế giao diện và prototype ứng dụng.",
+    "category": "Design",
+    "difficulty": "Dễ",
+    "progress": 100,
+    "isCompleted": true,
+    "videoUrl": "https://www.youtube.com/watch?v=jwCmIBJ8Jtc"
+  },
+  {
+    "id": 6,
+    "title": "TypeScript Core Concepts",
+    "description": "Học TypeScript từ cơ bản đến nâng cao.",
+    "category": "Language",
+    "difficulty": "Trung bình",
+    "progress": 20,
+    "isCompleted": false,
+    "videoUrl": "https://www.youtube.com/watch?v=30LWjhZzg50"
+  }
+],
+
+  "quizzes": [
+    {
+      "id": 1,
+      "lessonId": 1,
+      "title": "HTML & CSS Quiz",
+      "description": "Kiểm tra HTML và CSS cơ bản.",
+      "timeLimit": 600,
+      "totalQuestions": 5
+    },
+    {
+      "id": 2,
+      "lessonId": 2,
+      "title": "ReactJS Quiz",
+      "description": "Kiểm tra ReactJS.",
+      "timeLimit": 900,
+      "totalQuestions": 5
+    },
+    {
+      "id": 3,
+      "lessonId": 4,
+      "title": "NodeJS Quiz",
+      "description": "Kiểm tra Express API.",
+      "timeLimit": 900,
+      "totalQuestions": 5
+    }
+  ],
+
+  "questions": [
+    {
+      "id": 1,
+      "quizId": 1,
+      "question": "HTML viết tắt của gì?",
+      "options": [
+        "Hyper Text Markup Language",
+        "Home Tool Markup Language",
+        "Hyperlinks Text Markup Language",
+        "Hyper Transfer Markup Language"
+      ],
+      "correctAnswer": 0
+    },
+    {
+      "id": 2,
+      "quizId": 1,
+      "question": "CSS dùng để làm gì?",
+      "options": [
+        "Lưu dữ liệu",
+        "Định dạng giao diện",
+        "Kết nối database",
+        "Xử lý API"
+      ],
+      "correctAnswer": 1
+    },
+    {
+      "id": 3,
+      "quizId": 2,
+      "question": "React được phát triển bởi?",
+      "options": [
+        "Google",
+        "Microsoft",
+        "Facebook",
+        "Apple"
+      ],
+      "correctAnswer": 2
+    },
+    {
+      "id": 4,
+      "quizId": 2,
+      "question": "Hook dùng để quản lý state?",
+      "options": [
+        "useRef",
+        "useMemo",
+        "useState",
+        "useEffect"
+      ],
+      "correctAnswer": 2
     },
     {
       "id": 5,
-      "title": "UI/UX Mobile Design với Figma",
-      "description": "Học cách nghiên cứu trải nghiệm và thiết kế prototype ứng dụng di động.",
-      "category": "Design",
-      "difficulty": "Dễ",
-      "progress": 100,
-      "isCompleted": true
-    },
-    {
-      "id": 6,
-      "title": "TypeScript Core Concepts",
-      "description": "Nâng cấp kỹ năng viết code JavaScript an toàn, giảm thiểu tối đa lỗi runtime.",
-      "category": "Language",
-      "difficulty": "Trung bình",
-      "progress": 20,
-      "isCompleted": false
+      "quizId": 3,
+      "question": "Express là gì?",
+      "options": [
+        "Framework của NodeJS",
+        "Database",
+        "Frontend Library",
+        "CSS Framework"
+      ],
+      "correctAnswer": 0
     }
   ],
-  "quizzes": [],
-  "questions": [],
-  "quizResults": [],
-  "learningHistory": []
+
+  "quizResults": [
+    {
+      "id": 1,
+      "userId": 1,
+      "quizId": 1,
+      "score": 90,
+      "correctAnswers": 4,
+      "totalQuestions": 5,
+      "timeSpent": 450,
+      "completedAt": "2026-07-10T09:30:00"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "quizId": 2,
+      "score": 60,
+      "correctAnswers": 3,
+      "totalQuestions": 5,
+      "timeSpent": 700,
+      "completedAt": "2026-07-15T15:20:00"
+    }
+  ],
+
+  "learningHistory": [
+    {
+      "id": 1,
+      "userId": 1,
+      "lessonId": 1,
+      "action": "completed",
+      "date": "2026-07-08"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "lessonId": 2,
+      "action": "learning",
+      "date": "2026-07-15"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "lessonId": 4,
+      "action": "learning",
+      "date": "2026-07-18"
+    }
+  ]
 }
