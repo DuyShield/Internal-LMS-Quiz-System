@@ -1,16 +1,24 @@
 import React from 'react'; 
 import LoginPage from './pages/loginPage';
-import ListLessons from './pages/listLessons';
-import MainScreen from './pages/mainSrceen';
-import DetailLesson from './pages/detailLesson';
-import Profile from './pages/profileUser';
+import ListLessons from './pages/lesson/ListLesson/listLessons';
+import ListQuizzes from './pages/exam/ListQuizzes/listQuizzes';
+import MainScreen from './pages/home/mainSrceen';
+import DetailLesson from './pages/lesson/DetailLesson/detailLesson';
+import Profile from './pages/userProfile/profileUser';
+import DetailQuiz from './pages/exam/ExamPage/examScreen';
+import ResultPage from './pages/exam/ResultPage/resultPage';
+import HistoryPage from './pages/history/historyPage';
 export default function App() {
   return (
     <div>
         {/* <ListLessons /> */}
         {/* <MainScreen /> */}
         {/* <DetailLesson /> */}
-        <Profile />
+        {/* <Profile /> */}
+        {/* <ListQuizzes /> */}
+        <DetailQuiz></DetailQuiz>
+        {/* <ResultPage></ResultPage> */}
+        {/* <HistoryPage></HistoryPage> */}
     </div>
   );
 }

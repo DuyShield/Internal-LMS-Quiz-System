@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Topbar from '../compoments/common/topBar';
-import Sidebar from '../compoments/common/sideBar';
-import FilterBar from '../compoments/common/filterBar';
-import CardLesson from '../compoments/card/lessonsDisplay';
-import { getLessons } from '../services/lessonsService';
+import Topbar from '../../../compoments/common/topBar';
+import Sidebar from '../../../compoments/common/sideBar';
+import FilterBar from '../../../compoments/common/filterBar';
+import CardLesson from './lessonsCard';
+import { getLessons } from '../../../services/lessonsService';
 function App() {
   const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);

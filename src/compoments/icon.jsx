@@ -50,7 +50,7 @@ export function BookIcon(props) {
 
 export function ClockIcon(props) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24" style={{ color: 'rgb(74, 85, 101)', opacity: 1, transform: 'rotate(0deg)' }} {...props}>
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24" style={{ opacity: 1, transform: 'rotate(0deg)' }} {...props}>
             <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
                 <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0-18 0"></path>
                 <path d="M12 7v5l3 3"></path>
@@ -77,7 +77,7 @@ export function MonitorIcon(props) {
 
 export function InfoIcon(props) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="64" height="64" viewBox="0 0 24 24" style={{color: 'rgb(74, 85, 101)', opacity: 1, transform: 'rotate(0deg)'}} {...props}><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="64" height="64" viewBox="0 0 24 24" style={{ color: 'rgb(74, 85, 101)', opacity: 1, transform: 'rotate(0deg)' }} {...props}><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 16v-4m0-4h.01"></path></g>
         </svg>
@@ -86,7 +86,7 @@ export function InfoIcon(props) {
 
 export function CheckIcon(props) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="64" height="64" viewBox="0 0 24 24" style={{color: 'rgb(28, 32, 51)', opacity: 1, transform: 'rotate(0deg)'}} {...props}>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="64" height="64" viewBox="0 0 24 24" style={{ color: 'rgb(28, 32, 51)', opacity: 1, transform: 'rotate(0deg)' }} {...props}>
             <path fill="currentColor" d="m10.6 13.8l-2.15-2.15q-.275-.275-.7-.275t-.7.275t-.275.7t.275.7L9.9 15.9q.3.3.7.3t.7-.3l5.65-5.65q.275-.275.275-.7t-.275-.7t-.7-.275t-.7.275zM12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12t-.788 3.9t-2.137 3.175t-3.175 2.138T12 22m0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"></path>
         </svg>
     )
@@ -94,7 +94,7 @@ export function CheckIcon(props) {
 
 export function StarIcon(props) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width={props.size} height={props.size} viewBox="0 0 24 24" style={{color: 'rgb(74, 85, 101)', opacity: 1, transform: 'rotate(0deg)'}} {...props}>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width={props.size} height={props.size} viewBox="0 0 24 24" style={{ color: 'rgb(74, 85, 101)', opacity: 1, transform: 'rotate(0deg)' }} {...props}>
             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 17.75l-6.172 3.245l1.179-6.873l-5-4.867l6.9-1l3.086-6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
         </svg>
     )
@@ -112,6 +112,22 @@ export function ShareIcon(props) {
     return (
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+        </svg>
+    )
+}
+
+export function ArrowIcon(props) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width={props.size} height={props.size} viewBox="0 0 24 24" style={{opacity: 1, transform: 'rotate(0deg)'}} {...props}>
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="20" d="M3 12h17.5"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="20;0"></animate></path><path stroke-dasharray="12" stroke-dashoffset="12" d="M21 12l-7 7M21 12l-7 -7"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.3s" dur="0.2s" to="0"></animate></path></g>
+        </svg>
+    )
+}
+
+export function ResetIcon(props) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="64" height="64" viewBox="0 0 32 32" style={{opacity: 1, transform: 'rotate(0deg)'}} {...props}>
+            <path fill="currentColor" d="M18 28A12 12 0 1 0 6 16v6.2l-3.6-3.6L1 20l6 6l6-6l-1.4-1.4L8 22.2V16a10 10 0 1 1 10 10Z"></path>
         </svg>
     )
 }

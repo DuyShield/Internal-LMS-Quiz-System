@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Topbar from '../compoments/common/topBar';
-import Sidebar from '../compoments/common/sideBar';
-import { SaveIcon, ShareIcon, ClockIcon } from '../compoments/icon';
-import RenderVideo from '../compoments/renderVideo/render';
+import Topbar from '../../../compoments/common/topBar';
+import Sidebar from '../../../compoments/common/sideBar';
+import { SaveIcon, ShareIcon, ClockIcon } from '../../../compoments/icon';
+import RenderVideo from './render';
 export default function DetailLesson() {
     const [detailLesson, setDetailLesson] = useState([]);
 
