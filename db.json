@@ -2,8 +2,9 @@
   "users": [
     {
       "id": 1,
-      "fullName": "Nguyễn Văn A",
+      "fullName": "Nguyễn Văn D",
       "email": "vana@gmail.com",
+      "username": "vana",
       "password": "123456",
       "avatar": "/images/avatar1.png",
       "department": "Frontend",

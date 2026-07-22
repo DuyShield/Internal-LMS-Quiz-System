@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { HomeIcon, PersonIcon, BookIcon, ClockIcon, MonitorIcon, GraduationCapIcon } from "../icon";
 import SidebarNavItem from "./sideBarNavItem";
-
+import { useNavigate } from 'react-router-dom';
 export function Sidebar() {
+    const navigate = useNavigate();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const menuIcons = [
         { id: 'trang_chu', label: 'Trang chủ', icon: HomeIcon, isActive: true },
@@ -11,7 +12,13 @@ export function Sidebar() {
         { id: 'lich_su', label: 'Lịch sử', icon: ClockIcon, isActive: false },
         { id: 'thong_tin', label: 'Thông tin', icon: PersonIcon, isActive: false },
     ];
-
+    const handleLogout = (e) => {
+        // Xóa token với localstorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentUser');
+        
+        navigate('/login');
+    }
     return (
         <div className="relative flex h-screen flex-shrink-0">
             {/* Container chính của Sidebar */}
@@ -57,7 +64,7 @@ export function Sidebar() {
                     }
                 </div>
 
-                {/*Thông tin học viên*/}
+                {/* Thông tin học viên */}
                 <div className={`flex items-center gap-3 pt-4 border-t border-gray-100 ${isCollapsed ? 'justify-center' : ''}`}>
                     {/* Avatar*/}
                     <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center font-semibold text-xs border border-blue-100 flex-shrink-0">
@@ -69,7 +76,18 @@ export function Sidebar() {
                             <p className="text-xs text-gray-400 mt-0.5">Intern IT K2026</p>
                         </div>
                     )}
-                </div> 
+                    {/* Nút Đăng xuất */}
+                    {!isCollapsed && (
+                        <button
+                            onClick={handleLogout}
+                            title="Đăng xuất"
+                            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H8.25" />
+                            </svg>
+                        </button>
+                    )}
+                </div>
             </aside>
             {/* Nút mũi tên đóng/mở bám ở mép viền bên phải */}
             <button
@@ -79,7 +97,7 @@ export function Sidebar() {
                 ${isCollapsed
                         ? "left-3"
                         : "left-[240px]"
-                } md:absolute md:left-auto md:right-[-14px]
+                    } md:absolute md:left-auto md:right-[-14px]
             `}
             >
                 {isCollapsed ? (
