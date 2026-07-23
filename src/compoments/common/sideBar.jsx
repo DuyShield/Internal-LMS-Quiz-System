@@ -6,17 +6,17 @@ export function Sidebar() {
     const navigate = useNavigate();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const menuIcons = [
-        { id: 'trang_chu', label: 'Trang chủ', icon: HomeIcon, isActive: true },
-        { id: 'bai_giang', label: 'Bài giảng', icon: BookIcon, isActive: false },
-        { id: 'kiem_tra', label: 'Kiểm tra', icon: MonitorIcon, isActive: false },
-        { id: 'lich_su', label: 'Lịch sử', icon: ClockIcon, isActive: false },
-        { id: 'thong_tin', label: 'Thông tin', icon: PersonIcon, isActive: false },
+        { id: 'trang_chu', label: 'Trang chủ', icon: HomeIcon, path: '/dashboard' },
+        { id: 'bai_giang', label: 'Bài giảng', icon: BookIcon, path: '/lessons' },
+        { id: 'kiem_tra', label: 'Kiểm tra', icon: MonitorIcon, path: '/quizzes' },
+        { id: 'lich_su', label: 'Lịch sử', icon: ClockIcon, path: '/history' },
+        { id: 'thong_tin', label: 'Thông tin', icon: PersonIcon, path: '/profile' },
     ];
     const handleLogout = (e) => {
         // Xóa token với localstorage
         localStorage.removeItem('token');
         localStorage.removeItem('currentUser');
-        
+
         navigate('/login');
     }
     return (
@@ -51,15 +51,22 @@ export function Sidebar() {
                     {/* Danh sách Menu Navigation */}
                     {!isCollapsed &&
                         <nav className="flex flex-col gap-1">
-                            {menuIcons.map((item) => (
-                                <SidebarNavItem
-                                    key={item.id}
-                                    icon={item.icon}
-                                    label={item.label}
-                                    isActive={item.isActive}
-                                    isCollapsed={isCollapsed}
-                                />
-                            ))}
+
+                            {menuIcons.map((item) => {
+                                const isActive = location.pathname === item.path;
+                                return (
+                                    <SidebarNavItem
+                                        key={item.id}
+                                        icon={item.icon}
+                                        label={item.label}
+                                        isActive={isActive}
+                                        isCollapsed={isCollapsed}
+                                        onClick={() => {
+                                            navigate(item.path);
+                                        }}
+                                    />
+                                );
+                            })}
                         </nav>
                     }
                 </div>

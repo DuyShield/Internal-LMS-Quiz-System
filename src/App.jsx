@@ -38,7 +38,6 @@ export default function App() {
           }
         />
 
-        {/* 3. Các trang tính năng khác */}
         <Route
           path="/lessons"
           element={<ProtectedRoute><ListLessons /></ProtectedRoute>}/>
