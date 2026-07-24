@@ -1,14 +1,34 @@
 import React, { useState } from 'react';
 
-const QuizFilter = ({ onFilterChange }) => {
-  
+const QuizFilter = ({ onFilterChange, totalItems = 0, topicsList, checkedPage }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [status, setStatus] = useState('all'); 
-  const [topic, setTopic] = useState('all');   
+  const [status, setStatus] = useState('all');
+  const [topic, setTopic] = useState('all');
 
-  // Gửi bộ lộc mới lên cha
+  const defaultTopics = [
+    { id: 'all', label: 'Tất cả' },
+    { id: 'frontend', label: 'Frontend' },
+    { id: 'backend', label: 'Backend' },
+    { id: 'devops', label: 'DevOps' },
+    { id: 'softskills', label: 'Soft Skills' }
+  ];
+
+  const topics = topicsList || defaultTopics;
+
+  const statusOptions = checkedPage === "quizzes"
+    ? [
+        { id: 'all', label: 'Tất cả' },
+        { id: 'done', label: 'Đã làm' },
+        { id: 'not-done', label: 'Chưa làm' }
+      ]
+    : [
+        { id: 'all', label: 'Tất cả' },
+        { id: 'done', label: 'Đã học' },
+        { id: 'not-done', label: 'Chưa học' }
+      ];
+
+  // Gửi bộ lọc mới lên component cha
   const handleUpdateFilter = (updatedFields) => {
-    // Gộp giá trị mới thay đổi với các giá trị cũ
     const currentFilters = {
       search: searchTerm,
       status: status,
@@ -20,71 +40,76 @@ const QuizFilter = ({ onFilterChange }) => {
 
   return (
     <div className="w-full bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col gap-5">
-      
+
       {/* Search và Bộ lọc Trạng thái */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+        
         {/* Search input */}
         <div className="flex-1 w-full">
           <input
             type="text"
-            placeholder="Tìm kiếm bài quiz..."
-            className="w-full max-w-2xl px-4 py-2.5 rounded-xl border border-gray-200 bg-[#f8fafc] text-sm focus:outline-none focus:border-blue-500 transition-all"
+            placeholder={checkedPage === "quizzes" ? "Tìm kiếm bài quiz..." : "Tìm kiếm bài học..."}
+            className="w-full max-w-2xl px-4 py-2.5 rounded-xl border border-gray-200 bg-[#f8fafc] text-sm focus:outline-none focus:border-blue-500 focus:bg-white"
             value={searchTerm}
             onChange={(e) => {
-              setSearchTerm(e.target.value);
-              handleUpdateFilter({ search: e.target.value });
+              const value = e.target.value;
+              setSearchTerm(value);
+              handleUpdateFilter({ search: value });
             }}
           />
         </div>
 
-        {/* Filter */}
+        {/* Filter Trạng thái */}
         <div className="flex items-center gap-2 text-sm shrink-0">
-          <span className="text-gray-400">Trạng thái</span>
+          <span className="text-gray-400 font-medium">Trạng thái</span>
           <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">
-            <button 
-              className={`px-4 py-1.5 rounded-lg font-medium transition-all ${status === 'all' ? 'bg-[#0f2d59] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`}
-              onClick={() => { setStatus('all'); handleUpdateFilter({ status: 'all' }); }}
-            >Tất cả</button>
-            <button 
-              className={`px-4 py-1.5 rounded-lg font-medium transition-all ${status === 'done' ? 'bg-[#0f2d59] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`}
-              onClick={() => { setStatus('done'); handleUpdateFilter({ status: 'done' }); }}
-            >Đã làm</button>
-            <button 
-              className={`px-4 py-1.5 rounded-lg font-medium transition-all ${status === 'not-done' ? 'bg-[#0f2d59] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-100'}`}
-              onClick={() => { setStatus('not-done'); handleUpdateFilter({ status: 'not-done' }); }}
-            >Chưa làm</button>
+            {statusOptions.map((item) => (
+              <button
+                key={item.id}
+                className={`px-4 py-1.5 rounded-lg font-medium text-xs sm:text-sm ${
+                  status === item.id
+                    ? 'bg-[#0f2d59] text-white shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+                onClick={() => {
+                  setStatus(item.id);
+                  handleUpdateFilter({ status: item.id });
+                }}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Filter */}
-      <div className="flex justify-between items-center text-sm border-t border-gray-50 pt-4">
+      {/* Filter Chủ đề & Số lượng bài */}
+      <div className="flex justify-between items-center text-sm border-t border-gray-50 pt-4 gap-4 flex-wrap">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-gray-400 mr-2">Chủ đề</span>
-          
-          {[
-            { id: 'all', label: 'Tất cả' },
-            { id: 'frontend', label: 'Frontend' },
-            { id: 'backend', label: 'Backend' },
-            { id: 'devops', label: 'DevOps' },
-            { id: 'softskills', label: 'Soft Skills' }
-          ].map((item) => (
+          <span className="text-gray-400 font-medium mr-2">Chủ đề</span>
+
+          {topics.map((item) => (
             <button
               key={item.id}
-              className={`px-4 py-1.5 rounded-xl border font-medium transition-all ${
-                topic === item.id 
-                  ? 'bg-[#e6f4ff] text-[#1890ff] border-[#1890ff]' 
+              className={`px-4 py-1.5 rounded-xl border text-xs sm:text-sm font-medium ${
+                topic === item.id
+                  ? 'bg-[#e6f4ff] text-[#1890ff] border-[#1890ff]'
                   : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
               }`}
-              onClick={() => { setTopic(item.id); handleUpdateFilter({ topic: item.id }); }}
+              onClick={() => {
+                setTopic(item.id);
+                handleUpdateFilter({ topic: item.id });
+              }}
             >
               {item.label}
             </button>
           ))}
         </div>
 
-        {/* Số lượng bài hiển thị bên góc phải */}
-        <span className="text-gray-400 font-medium shrink-0">12 bài</span>
+        <span className="text-gray-400 font-medium shrink-0 ml-auto sm:ml-0">
+          {totalItems} {checkedPage === "quizzes" ? "Đề" : "Bài"}
+        </span>
+
       </div>
 
     </div>
