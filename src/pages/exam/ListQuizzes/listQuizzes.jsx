@@ -5,30 +5,30 @@ import FilterBar from '../../../compoments/common/filterBar';
 import CardQuiz from './quizCard';
 import { getLessons } from '../../../services/lessonsService';
 function listQuizzes() {
-//   const [lessons, setLessons] = useState([]);
-//   const [loading, setLoading] = useState(true);
+  const [lessons, setLessons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-//   useEffect(() => {
-//     const fetchLessons= async () => {
-//       try {
-//         setLoading(true);
+  useEffect(() => {
+    const fetchLessons= async () => {
+      try {
+        setLoading(true);
 
-//         const data = await getLessons();
+        const data = await getLessons();
 
-//         setLessons(data);
-//       } catch (error) {
-//         console.error("Lỗi khi fetch dữ liệu khóa học:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+        setLessons(data);
+      } catch (error) {
+        console.error("Lỗi khi fetch dữ liệu khóa học:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//     fetchLessons();
-//   }, []);
+    fetchLessons();
+  }, []);
 
-//   if (loading) {
-//     return <div className="text-center mt-10">Đang tải dữ liệu...</div>;
-//   }
+  if (loading) {
+    return <div className="text-center mt-10">Đang tải dữ liệu...</div>;
+  }
   return (
     <div className="flex w-full h-screen overflow-hidden bg-slate-50 text-gray-800 font-sans antialiased">
       {/* Sidebar */}
@@ -39,12 +39,12 @@ function listQuizzes() {
       <main className="flex-1 p-4 overflow-y-auto">
         {/* Phần Filter */}
         <div className="mb-4">
-          <FilterBar />
+          <FilterBar checkedPage="quizzes"/>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Main information */}
-          {/* {lessons.map((lesson) => (
-            <CardLesson
+          {lessons.map((lesson) => (
+            <CardQuiz
               key={lesson.id}
               title={lesson.title}
               description={lesson.description}
@@ -53,13 +53,7 @@ function listQuizzes() {
               progress={lesson.progress}
               isCompleted={lesson.isCompleted}
             />
-          ))} */}
-            <CardQuiz
-            Key={1}
-            title='test'
-            >
-
-            </CardQuiz>
+          ))}
         </div>
       </main>
       </div>
