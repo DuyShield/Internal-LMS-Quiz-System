@@ -19,14 +19,14 @@ export default function quizCard({
 
     const currentStyle = difficultyStyle[difficulty] || "bg-slate-50 text-slate-500"
     return (
-        <div className="w-full md:max-w-sm w-full bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+        <div className="w-full h-full bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between">
             {/* Tiêu đề và trạng thái học tập */}
             <div className='flex items-start justify-between gap-4'>
                 <div className='flex-1 min-w-0'>
                     <h1 className='text-sm font-bold leading-snug line-clamp-1'>
                         {title}
                     </h1>
-                    <p className='text-xs mt-1 text-slate-400 line-clamp-2 md:line-clamp-none'>
+                    <p className='text-xs mt-1 text-slate-400 line-clamp-2 h-8'>
                         {description}
                     </p>
                 </div>
