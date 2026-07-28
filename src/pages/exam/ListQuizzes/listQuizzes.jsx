@@ -55,6 +55,7 @@ export default function ListQuizzes() {
             {/* Main information */}
             {filteredQuizzes.length > 0 ? (filteredQuizzes.map((lesson) => (
               <CardQuiz
+                id={lesson.id}
                 key={lesson.id}
                 title={lesson.title}
                 description={lesson.description}
