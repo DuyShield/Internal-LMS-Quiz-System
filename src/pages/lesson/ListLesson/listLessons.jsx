@@ -28,8 +28,8 @@ function App() {
     fetchLessons();
   }, []);
 
-  // Lọc dữ liệu ngắn gọn
-  const filteredLessons = lessons.filter((item) => {
+    // Lọc dữ liệu ngắn gọn
+    const filteredLessons = lessons.filter((item) => {
     const matchSearch = item.title?.toLowerCase().includes(filters.search.toLowerCase());
     const matchStatus = filters.status === 'all' || (filters.status === 'done' ? item.isCompleted : !item.isCompleted);
     const matchTopic = filters.topic === 'all' || item.category?.toLowerCase() === filters.topic.toLowerCase();
