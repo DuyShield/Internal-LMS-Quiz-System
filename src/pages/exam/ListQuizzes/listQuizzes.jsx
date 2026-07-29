@@ -53,16 +53,16 @@ export default function ListQuizzes() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Main information */}
-            {filteredQuizzes.length > 0 ? (filteredQuizzes.map((lesson) => (
+            {filteredQuizzes.length > 0 ? (filteredQuizzes.map((quiz) => (
               <CardQuiz
-                id={lesson.id}
-                key={lesson.id}
-                title={lesson.title}
-                description={lesson.description}
-                category={lesson.category}
-                difficulty={lesson.difficulty}
-                progress={lesson.progress}
-                isCompleted={lesson.isCompleted}
+                id={quiz.id}
+                key={quiz.id}
+                title={quiz.title}
+                description={quiz.description}
+                category={quiz.category}
+                difficulty={quiz.difficulty}
+                progress={quiz.progress}
+                isCompleted={quiz.isCompleted}
               />
             ))) :
               <div className="col-span-full text-center py-10 text-gray-400">

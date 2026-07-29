@@ -3,7 +3,7 @@ import Header from '../component/header';
 import QuestionContent from './questionContent';
 import QuestionNavigator from './questionNav';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getQuestionsByQuizId } from '../../../services/quizzesService';
+import { getQuestionsByQuizId, getQuizById } from '../../../services/quizzesService';
 
 export default function ExamScreen() {
   const { id } = useParams();
@@ -12,6 +12,7 @@ export default function ExamScreen() {
   const [loading, setLoading] = useState(true);
   // Lưu trực tiếp danh sách câu hỏi 
   const [questions, setQuestions] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   // Lưu đáp án người dùng chọn
   const [userAnswers, setUserAnswers] = useState({});
   // Quản lý câu hỏi hiện tại
@@ -24,8 +25,9 @@ export default function ExamScreen() {
       try {
         setLoading(true);
         const data = await getQuestionsByQuizId(id);
-
+        const quizData = await getQuizById(id);
         setQuestions(data);
+        setQuizzes(quizData);
       } catch (error) {
         console.error("Lỗi khi fetch dữ liệu câu hỏi:", error);
       } finally {
@@ -90,7 +92,13 @@ export default function ExamScreen() {
 
   return (
     <div className="min-h-screen bg-blue-50 flex flex-col gap-5">
-      <Header />
+      <Header 
+      quizId={id}
+      title={quizzes.title}
+      type={quizzes.category}
+      difficulty={quizzes.difficulty}
+      time={quizzes.timeLimit}
+      isExam={true}/>
       <div className="flex flex-col lg:flex-row gap-5 px-8 py-5">
         <QuestionContent
           title={`Bài kiểm tra #${id}`}
