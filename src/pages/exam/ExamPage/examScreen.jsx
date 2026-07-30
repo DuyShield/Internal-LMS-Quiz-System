@@ -14,10 +14,15 @@ export default function ExamScreen() {
   const [questions, setQuestions] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
   // Lưu đáp án người dùng chọn
-  const [userAnswers, setUserAnswers] = useState({});
+  const [userAnswers, setUserAnswers] = useState(() => {
+    if (!id) return {};
+    const savedAnswers = localStorage.getItem(`answers_${id}`);
+    return savedAnswers ? JSON.parse(savedAnswers) : {};
+  });
   // Quản lý câu hỏi hiện tại
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  // Lưu trữ câu hỏi cho từng câu hỏi
+  const STORAGE_KEY = `answers_${id}`;
   useEffect(() => {
     const fetchLesson = async () => {
       if (!id || id === 'undefined') return;
@@ -37,6 +42,20 @@ export default function ExamScreen() {
 
     fetchLesson();
   }, [id]);
+  // Tự động reset khi user đổi bài thi
+  useEffect(() => {
+    if (id) {
+      const savedAnswers = localStorage.getItem(`answers_${id}`);
+      setUserAnswers(savedAnswers ? JSON.parse(savedAnswers) : {});
+      setCurrentIndex(0);
+    }
+  }, [id]);
+  // Lưu từng câu hỏi người dùng chọn
+  useEffect(() => {
+    if (id && Object.keys(userAnswers).length > 0) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers));
+    }
+  }, [userAnswers, id, STORAGE_KEY]);
 
   if (loading) {
     return <div className="p-5 text-center">Đang tải data...</div>;
@@ -88,17 +107,33 @@ export default function ExamScreen() {
     const message = isFull
       ? "Bạn có chắc chắn muốn nộp bài?"
       : `Bạn còn ${totalQuestions - answeredCount} câu chưa làm. Bạn vẫn muốn nộp bài chứ?`;
+    // Xác nhận nộp bài
+    if (!window.confirm("Bạn có chắc chắn muốn nộp bài?")) return;
+    // Tính điểm theo thanh 10, điểm = số câu đúng/ tổng số câu
+    const correctCount = questions.filter((q, i) => userAnswers[i] === LABELS[q.correctAnswer]).length;
+    const score = Number(((correctCount / totalQuestions) * 10).toFixed(1));
+    // Xóa đáp án localstorage và time
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(`endTime_${id}`);
+
+    navigate(`/result/${id}`, {
+      state: { score, 
+               correctCount, 
+               totalCount: totalQuestions, 
+               quizTitle: quizzes.title, 
+               timeTaken: quizzes.timeLimit }
+    });
   };
 
   return (
     <div className="min-h-screen bg-blue-50 flex flex-col gap-5">
-      <Header 
-      quizId={id}
-      title={quizzes.title}
-      type={quizzes.category}
-      difficulty={quizzes.difficulty}
-      time={quizzes.timeLimit}
-      isExam={true}/>
+      <Header
+        quizId={id}
+        title={quizzes.title}
+        type={quizzes.category}
+        difficulty={quizzes.difficulty}
+        time={quizzes.timeLimit}
+        isExam={true} />
       <div className="flex flex-col lg:flex-row gap-5 px-8 py-5">
         <QuestionContent
           title={`Bài kiểm tra #${id}`}

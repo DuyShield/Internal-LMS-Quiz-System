@@ -1,6 +1,7 @@
 import { GraduationCapIcon } from "../../../compoments/icon";
 import { formatTime } from "./formatTime";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 export default function Header({
     quizId = 1,
     avatar = "32x32",
@@ -16,45 +17,45 @@ export default function Header({
     // Lấy username tại localStorage
     const username = savedUser?.fullName || "Khách";
     // Thời gian bài thi
-    const [timeLeft, setTimeLeft] = useState(() => {
-        if (!isExam) return 0;
-        // Lưu thời gian kết thúc bài thi
-        const storageKey = `endTime_${quizId}`;
-        // Lấy endTime cũ hoặc tính endTime mới
-        const endTime = Number(localStorage.getItem(storageKey)) || (() => {
-            const newEndTime = Date.now() + time * 1000;
-            localStorage.setItem(storageKey, newEndTime.toString());
-            return newEndTime;
-        })();
-
-        const remaining = Math.floor((endTime - Date.now()) / 1000);
-        return remaining > 0 ? remaining : 0;
-    });
-    // Kiểm tra thời gian lưu trong localStorage
+    const storageKey = `endTime_${quizId}`;
+    const [timeLeft, setTimeLeft] = useState(0);
     useEffect(() => {
-        if (timeLeft <= 0) return;
+        if (!isExam || !quizId) return;
 
+        // Lấy endTime cũ hoặc tạo mới nếu chưa có
+        let endTime = Number(localStorage.getItem(storageKey));
+        if (!endTime) {
+            endTime = Date.now() + time * 1000;
+            localStorage.setItem(storageKey, endTime.toString());
+        }
+        // Lập trình thời gian
         const timer = setInterval(() => {
-            setTimeLeft((prev) => prev - 1);
+            const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+            setTimeLeft(remaining);
+            if (remaining === 0) {
+                localStorage.removeItem(storageKey);
+                clearInterval(timer);
+            }
         }, 1000);
-
         return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [quizId, isExam, time]);
 
     return (
         <header className="w-full bg-white border-b border-slate-100 shadow-sm px-6 py-3">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    {/* Logo */}
-                    <div className="h-10 w-10 bg-[#3A76F5] rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-[#3A76F5]/30">
-                        <GraduationCapIcon props={{ className: "w-5 h-5 text-white" }} />
-                    </div>
-                    <div>
-                        <h1 className="text-sm font-bold text-slate-800 leading-none">IT Internship</h1>
-                        <span className="text-xs text-slate-400">Portal</span>
-                    </div>
-                </div>
+                <Link to="/dashboard">
+                    <div className="flex items-center gap-3">
+                        {/* Logo */}
+                        <div className="h-10 w-10 bg-[#3A76F5] rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-[#3A76F5]/30">
+                            <GraduationCapIcon props={{ className: "w-5 h-5 text-white" }} />
+                        </div>
+                        <div>
+                            <h1 className="text-sm font-bold text-slate-800 leading-none">IT Internship</h1>
+                            <span className="text-xs text-slate-400">Portal</span>
+                        </div>
 
+                    </div>
+                </Link>
                 {/* Thông tin bài thi */}
                 <div className="hidden md:flex items-center gap-3 text-sm">
                     <span className="font-bold text-slate-800">{title}</span>
