@@ -2,36 +2,48 @@ import React, { useEffect, useState } from 'react';
 import Header from '../component/header';
 import QuestionContent from './questionContent';
 import QuestionNavigator from './questionNav';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getQuestionsByQuizId, getQuizById } from '../../../services/quizzesService';
 
 export default function ExamScreen() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Kiểm tra xem có đang ở chế độ Xem lại đáp án hay không
+  const isReview = location.state?.isReview || false;
+  const reviewUserAnswers = location.state?.userAnswers || null;
+  const reviewQuestions = location.state?.questions || null;
 
   const [loading, setLoading] = useState(true);
-  // Lưu trực tiếp danh sách câu hỏi 
   const [questions, setQuestions] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
+
   // Lưu đáp án người dùng chọn
   const [userAnswers, setUserAnswers] = useState(() => {
+    if (isReview && reviewUserAnswers) return reviewUserAnswers;
     if (!id) return {};
     const savedAnswers = localStorage.getItem(`answers_${id}`);
     return savedAnswers ? JSON.parse(savedAnswers) : {};
   });
-  // Quản lý câu hỏi hiện tại
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  // Lưu trữ câu hỏi cho từng câu hỏi
   const STORAGE_KEY = `answers_${id}`;
+
   useEffect(() => {
     const fetchLesson = async () => {
       if (!id || id === 'undefined') return;
 
       try {
         setLoading(true);
-        const data = await getQuestionsByQuizId(id);
+        // Nếu đã có questions từ location.state 
+        if (isReview && reviewQuestions) {
+          setQuestions(reviewQuestions);
+        } else {
+          const data = await getQuestionsByQuizId(id);
+          setQuestions(data);
+        }
         const quizData = await getQuizById(id);
-        setQuestions(data);
         setQuizzes(quizData);
       } catch (error) {
         console.error("Lỗi khi fetch dữ liệu câu hỏi:", error);
@@ -41,36 +53,38 @@ export default function ExamScreen() {
     };
 
     fetchLesson();
-  }, [id]);
-  // Tự động reset khi user đổi bài thi
+  }, [id, isReview, reviewQuestions]);
+
+  // Reset state khi id hoặc chế độ review thay đổi
   useEffect(() => {
     if (id) {
-      const savedAnswers = localStorage.getItem(`answers_${id}`);
-      setUserAnswers(savedAnswers ? JSON.parse(savedAnswers) : {});
+      if (isReview && reviewUserAnswers) {
+        setUserAnswers(reviewUserAnswers);
+      } else {
+        const savedAnswers = localStorage.getItem(`answers_${id}`);
+        setUserAnswers(savedAnswers ? JSON.parse(savedAnswers) : {});
+      }
       setCurrentIndex(0);
     }
-  }, [id]);
-  // Lưu từng câu hỏi người dùng chọn
+  }, [id, isReview, reviewUserAnswers]);
+
+  // Lưu vào localStorage
   useEffect(() => {
-    if (id && Object.keys(userAnswers).length > 0) {
+    if (!isReview && id && Object.keys(userAnswers).length > 0) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userAnswers));
     }
-  }, [userAnswers, id, STORAGE_KEY]);
+  }, [userAnswers, id, STORAGE_KEY, isReview]);
 
   if (loading) {
     return <div className="p-5 text-center">Đang tải data...</div>;
   }
 
-  // Kiểm tra mảng questions trực tiếp
   if (!questions || questions.length === 0) {
-    console.log("ID hiện tại:", id);
     return <div className="p-5 text-center">Không tìm thấy data bài kiểm tra!</div>;
   }
 
-  // Lấy dữ liệu câu hỏi hiện tại
   const currentQuestion = questions[currentIndex];
   const totalQuestions = questions.length;
-
   const LABELS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   const formattedOptions = currentQuestion?.options?.map((text, idx) => ({
@@ -78,15 +92,19 @@ export default function ExamScreen() {
     text: text
   })) || [];
 
+  const correctOptionLetter = currentQuestion?.correctAnswer !== undefined
+    ? LABELS[currentQuestion.correctAnswer]
+    : null;
+
   // Xử lý khi chọn đáp án
   const handleSelectOption = (optionId) => {
+    if (isReview) return;
     setUserAnswers((prev) => ({
       ...prev,
       [currentIndex]: optionId,
     }));
   };
 
-  // Xử lý chuyển câu hỏi
   const handleNext = () => {
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -104,24 +122,31 @@ export default function ExamScreen() {
     const answeredCount = Object.keys(userAnswers).length;
     const isFull = answeredCount === totalQuestions;
 
-    const message = isFull
+    const confirmMessage = isFull
       ? "Bạn có chắc chắn muốn nộp bài?"
       : `Bạn còn ${totalQuestions - answeredCount} câu chưa làm. Bạn vẫn muốn nộp bài chứ?`;
-    // Xác nhận nộp bài
-    if (!window.confirm("Bạn có chắc chắn muốn nộp bài?")) return;
-    // Tính điểm theo thanh 10, điểm = số câu đúng/ tổng số câu
+
+    if (!window.confirm(confirmMessage)) return;
+
+    // Tính số câu đúng
     const correctCount = questions.filter((q, i) => userAnswers[i] === LABELS[q.correctAnswer]).length;
     const score = Number(((correctCount / totalQuestions) * 10).toFixed(1));
-    // Xóa đáp án localstorage và time
+
+    // Xóa bộ nhớ tạm local
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(`endTime_${id}`);
 
+    // Truyền sang ResultPage
     navigate(`/result/${id}`, {
-      state: { score, 
-               correctCount, 
-               totalCount: totalQuestions, 
-               quizTitle: quizzes.title, 
-               timeTaken: quizzes.timeLimit }
+      state: {
+        score,
+        correctCount,
+        totalCount: totalQuestions,
+        quizTitle: quizzes.title || 'Bài kiểm tra',
+        timeTaken: quizzes.timeLimit || '00:00',
+        userAnswers, 
+        questions  
+      }
     });
   };
 
@@ -133,20 +158,23 @@ export default function ExamScreen() {
         type={quizzes.category}
         difficulty={quizzes.difficulty}
         time={quizzes.timeLimit}
-        isExam={true} />
+        isExam={!isReview}
+      />
+
       <div className="flex flex-col lg:flex-row gap-5 px-8 py-5">
         <QuestionContent
-          title={`Bài kiểm tra #${id}`}
+          title={quizzes.title || `Bài kiểm tra #${id}`}
           questionNumber={currentIndex + 1}
           totalQuestions={totalQuestions}
           currentIndex={currentIndex}
           questionText={currentQuestion?.question || ""}
           options={formattedOptions}
           selectedOption={userAnswers[currentIndex]}
+          correctOptionId={correctOptionLetter} 
+          isReview={isReview}                  
           onSelectOption={handleSelectOption}
           onPrev={handlePrev}
           onNext={handleNext}
-
         />
         <QuestionNavigator
           total={totalQuestions}
@@ -154,6 +182,7 @@ export default function ExamScreen() {
           userAnswers={userAnswers}
           onSelectQuestion={(index) => setCurrentIndex(index)}
           onSubmit={handleSubmit}
+          isReview={isReview}
         />
       </div>
     </div>

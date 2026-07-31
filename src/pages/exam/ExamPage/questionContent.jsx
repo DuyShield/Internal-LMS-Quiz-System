@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowIcon } from "../../../compoments/icon";
+
 export default function QuestionBox({
   title = "React State & Hooks",
   questionNumber = 5,
@@ -13,14 +14,16 @@ export default function QuestionBox({
     { id: 'D', text: 'useReducer' }
   ],
   selectedOption = null,
+  correctOptionId = null, 
+  isReview = false,      
   onSelectOption,
   onPrev,
   onNext
 }) {
   return (
-    <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-md overflow-hidden flex flex-col min-h-[500px] ">
+    <div className="w-full bg-white rounded-2xl border border-gray-100 shadow-md overflow-hidden flex flex-col min-h-[500px]">
       <div className="p-5 md:p-8 flex-1">
-        {/* Thong tin bài thi */}
+        {/* Thông tin bài thi */}
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
           <div>
             <span className="text-xs text-slate-400 block mb-1">{title}</span>
@@ -40,10 +43,23 @@ export default function QuestionBox({
           </div>
         </div>
 
-        {/* Tag số câu nhỏ */}
-        <span className="inline-block bg-blue-50 text-[#3A76F5] text-xs font-semibold px-3 py-1 rounded-lg mb-4">
-          Câu hỏi {questionNumber}
-        </span>
+        {/* Tag số câu nhỏ & Trạng thái kết quả nếu ở chế độ Review */}
+        <div className="flex items-center gap-2 mb-4">
+          <span className="inline-block bg-blue-50 text-[#3A76F5] text-xs font-semibold px-3 py-1 rounded-lg">
+            Câu hỏi {questionNumber}
+          </span>
+          {isReview && (
+            selectedOption === correctOptionId ? (
+              <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-lg">
+                Đúng
+              </span>
+            ) : (
+              <span className="inline-block bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1 rounded-lg">
+                Sai
+              </span>
+            )
+          )}
+        </div>
 
         {/* Nội dung câu hỏi */}
         <h3 className="text-lg font-bold text-slate-800 leading-snug mb-8">
@@ -54,71 +70,89 @@ export default function QuestionBox({
         <div className="space-y-3.5">
           {options.map((option) => {
             const isSelected = selectedOption === option.id;
+            const isCorrect = option.id === correctOptionId;
+
+            let containerStyle = "border-slate-100 hover:border-slate-200 hover:bg-slate-100";
+            let badgeStyle = "bg-blue-50 text-[#3A76F5]";
+            let textStyle = "text-slate-600";
+
+            if (isReview) {
+              if (isCorrect) {
+                // Đáp án Đúng -> Màu Xanh Lá
+                containerStyle = "border-2 border-emerald-500 bg-emerald-50";
+                badgeStyle = "bg-emerald-500 text-white";
+                textStyle = "text-emerald-900 font-semibold";
+              } else if (isSelected && !isCorrect) {
+                // Đáp án Sai -> Màu Đỏ
+                containerStyle = "border-2 border-rose-500 bg-rose-50";
+                badgeStyle = "bg-rose-500 text-white";
+                textStyle = "text-rose-900 font-semibold";
+              } else {
+                containerStyle = "border-slate-100 opacity-60";
+              }
+            } else if (isSelected) {
+              // Chế độ làm bài bình thường khi người dùng chọn
+              containerStyle = "border-2 border-[#3A76F5] bg-blue-100";
+              badgeStyle = "bg-[#3A76F5] text-white";
+              textStyle = "text-slate-900 font-semibold";
+            }
+
             return (
               <button
                 key={option.id}
+                disabled={isReview}
                 onClick={() => onSelectOption && onSelectOption(option.id)}
                 className={`
-                  w-full flex items-center gap-4 p-4 rounded-xl border text-left
-                  ${isSelected
-                    ? "border-2 border-[#3A76F5] bg-blue-100"
-                    : "border-slate-100 hover:border-slate-200 hover:bg-slate-100"
-                  }
+                  w-full flex items-center gap-4 p-4 rounded-xl border text-left transition-all
+                  ${containerStyle}
                 `}>
                 {/* Khung chứa chữ A, B, C, D */}
                 <div className={`
-                  w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0
-                  ${isSelected
-                    ? "bg-[#3A76F5] text-white"
-                    : "bg-blue-50 text-[#3A76F5]"
-                  }`}>
+                  w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 transition-colors
+                  ${badgeStyle}`}>
                   {option.id}
                 </div>
-                {/* Chữ của đáp án */}
-                <span className={`text-sm font-medium ${isSelected ? "text-slate-900 font-semibold" : "text-slate-600"}`}>
+                {/* Nội dung đáp án */}
+                <span className={`text-sm font-medium ${textStyle}`}>
                   {option.text}
                 </span>
               </button>
             );
           })}
         </div>
-
       </div>
 
+      {/* Thanh điều hướng câu hỏi bên dưới */}
       <div className="border-t border-slate-100 p-4 md:p-6 bg-white flex justify-between items-center gap-2">
         {/* Nút câu trước */}
         <button
           onClick={onPrev}
           disabled={questionNumber === 1}
-          className="flex items-center justify-center gap-2 px-2.5 md:px-5 py-2.5 bg-white border border-[#3A76F5] text-[#3A76F5] font-semibold text-sm rounded-xl hover:bg-blue-100 disabled:border-slate-300 disabled:text-slate-400 disabled:hover:bg-white">
+          className="flex items-center justify-center gap-2 px-2.5 md:px-5 py-2.5 bg-white border border-[#3A76F5] text-[#3A76F5] font-semibold text-sm rounded-xl hover:bg-blue-100 disabled:text-slate-400 disabled:hover:bg-white"
+        >
           <ArrowIcon className="w-4 h-4 shrink-0 rotate-180" />
           <span className="whitespace-nowrap text-xs md:text-sm">Câu trước</span>
         </button>
 
-        {/* Dấu chấm chuyển câu */}
         <div className="hidden md:flex xs:flex gap-1.5 shrink-0">
           {Array.from({ length: totalQuestions }).map((_, i) => (
             <span
               key={i}
-              className={`h-2 rounded-full ${i === currentIndex
-                ? "w-4 bg-[#3A76F5]"
-                : "w-2 bg-slate-200"
+              className={`h-2 rounded-full transition-all ${i === currentIndex ? "w-4 bg-[#3A76F5]" : "w-2 bg-slate-200"
                 }`}
             ></span>
           ))}
         </div>
 
-        {/* Nút câu tiếp theo*/}
+        {/* Nút câu tiếp theo */}
         <button
           onClick={onNext}
           disabled={questionNumber === totalQuestions}
-          className="flex items-center justify-center gap-2 px-2.5 md:px-5 py-2.5 bg-white border border-[#3A76F5] text-[#3A76F5] font-semibold text-sm rounded-xl hover:bg-blue-100 disabled:border-slate-300 disabled:text-slate-400 disabled:hover:bg-white">
+          className="flex items-center justify-center gap-2 px-2.5 md:px-5 py-2.5 bg-white border border-[#3A76F5] text-[#3A76F5] font-semibold text-sm rounded-xl hover:bg-blue-100  disabled:text-slate-400 disabled:hover:bg-white">
           <span className="whitespace-nowrap text-xs md:text-sm">Câu tiếp</span>
           <ArrowIcon className="w-4 h-4 shrink-0" />
         </button>
-
       </div>
-
     </div>
   );
 }

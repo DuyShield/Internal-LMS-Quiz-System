@@ -1,21 +1,21 @@
 import React from 'react';
 import { ResetIcon, ArrowIcon } from '../../../compoments/icon';
-
+import { useNavigate } from 'react-router-dom';
 export default function ResultCard({
     score = 8.0,
     correctCount = 16,
     totalCount = 20,
     isPassed,
     timeTaken = "12:34",
-    passScore = 70, 
-    onRetry,
-    onViewDetails,
-    onBackToList
+    passScore = 70,
+    onRestart,
+    onViewAnswer,
 }) {
     // Tính điểm
     const wrongCount = Math.max(0, totalCount - correctCount);
     const correctRatio = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
+    const navigate = useNavigate();
     return (
         <div className="w-full sm:max-w-sm md:max-w-lg bg-white rounded-xl border border-gray-100 shadow-xl p-8 overflow-hidden mx-auto">
             {/* Thông tin bảng */}
@@ -91,33 +91,33 @@ export default function ResultCard({
             {/* Điều hướng trang */}
             <div className="mt-8 space-y-3">
                 {/* Button làm lại */}
-                {onRetry && (
+                {
                     <button
-                        onClick={onRetry}
+                        onClick={onRestart}
                         className="w-full border border-blue-100 bg-white text-[#3A76F5] py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-100">
                         <ResetIcon className='h-5 w-5' />
                         <span>Làm lại</span>
                     </button>
-                )}
+                }
 
                 {/* Button xem chi tiết đáp án */}
-                {onViewDetails && (
+                {
                     <button
-                        onClick={onViewDetails}
+                        onClick={onViewAnswer}
                         className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white py-3.5 rounded-xl font-bold text-sm shadow-sm">
                         Xem chi tiết đáp án
                     </button>
-                )}
+                }
 
                 {/* Button comeback ListQuiz */}
-                {onBackToList && (
+                {
                     <button
-                        onClick={onBackToList}
+                        onClick={() => navigate("/quizzes")}
                         className="w-full bg-[#1D4ED8] hover:bg-[#1E40AF] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm ">
                         <ArrowIcon className='h-5 w-5 rotate-180' />
                         <span>Quay lại danh sách</span>
                     </button>
-                )}
+                }
             </div>
         </div>
     );
