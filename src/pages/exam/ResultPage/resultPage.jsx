@@ -8,13 +8,13 @@ export default function ResultPage() {
     const location = useLocation();
     const navigate = useNavigate();
     const [quizzes, setQuizzes] = useState([]);
-        const resultData = location.state || {
-            score: 0,
-            correctCount: 0,
-            totalCount: 0,
-            quizTitle: 'Bài kiểm tra',
-            timeTaken: '00:00'
-        };
+    const resultData = location.state || {
+        score: 0,
+        correctCount: 0,
+        totalCount: 0,
+        quizTitle: 'Bài kiểm tra',
+        timeTaken: '00:00'
+    };
     useEffect(() => {
         const fetchLesson = async () => {
             if (!id || id === 'undefined') return;

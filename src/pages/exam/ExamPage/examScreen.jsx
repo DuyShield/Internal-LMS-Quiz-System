@@ -121,13 +121,13 @@ export default function ExamScreen() {
   const handleSubmit = () => {
     const answeredCount = Object.keys(userAnswers).length;
     const isFull = answeredCount === totalQuestions;
+    if (!isReview) {
+      const confirmMessage = isFull
+        ? "Bạn có chắc chắn muốn nộp bài?"
+        : `Bạn còn ${totalQuestions - answeredCount} câu chưa làm. Bạn vẫn muốn nộp bài chứ?`;
+      if (!window.confirm(confirmMessage)) return;
 
-    const confirmMessage = isFull
-      ? "Bạn có chắc chắn muốn nộp bài?"
-      : `Bạn còn ${totalQuestions - answeredCount} câu chưa làm. Bạn vẫn muốn nộp bài chứ?`;
-
-    if (!window.confirm(confirmMessage)) return;
-
+    }
     // Tính số câu đúng
     const correctCount = questions.filter((q, i) => userAnswers[i] === LABELS[q.correctAnswer]).length;
     const score = Number(((correctCount / totalQuestions) * 10).toFixed(1));
@@ -144,8 +144,8 @@ export default function ExamScreen() {
         totalCount: totalQuestions,
         quizTitle: quizzes.title || 'Bài kiểm tra',
         timeTaken: quizzes.timeLimit || '00:00',
-        userAnswers, 
-        questions  
+        userAnswers,
+        questions
       }
     });
   };
@@ -170,8 +170,8 @@ export default function ExamScreen() {
           questionText={currentQuestion?.question || ""}
           options={formattedOptions}
           selectedOption={userAnswers[currentIndex]}
-          correctOptionId={correctOptionLetter} 
-          isReview={isReview}                  
+          correctOptionId={correctOptionLetter}
+          isReview={isReview}
           onSelectOption={handleSelectOption}
           onPrev={handlePrev}
           onNext={handleNext}
