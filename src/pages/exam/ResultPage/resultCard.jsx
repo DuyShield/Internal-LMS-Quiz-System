@@ -1,19 +1,21 @@
 import React from 'react';
 import { ResetIcon, ArrowIcon } from '../../../compoments/icon';
+import { useNavigate } from 'react-router-dom';
 export default function ResultCard({
+    score = 8.0,
     correctCount = 16,
     totalCount = 20,
-    isPassed = true,
+    isPassed,
     timeTaken = "12:34",
     passScore = 70,
-    onRetry,
-    onViewDetails,
-    onBackToList
+    onRestart,
+    onViewAnswer,
 }) {
-    // Tính toán tỷ lệ đúng tự động
-    const correctRatio = Math.round((correctCount / totalCount) * 100);
-    const wrongCount = totalCount - correctCount;
+    // Tính điểm
+    const wrongCount = Math.max(0, totalCount - correctCount);
+    const correctRatio = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
 
+    const navigate = useNavigate();
     return (
         <div className="w-full sm:max-w-sm md:max-w-lg bg-white rounded-xl border border-gray-100 shadow-xl p-8 overflow-hidden mx-auto">
             {/* Thông tin bảng */}
@@ -22,22 +24,22 @@ export default function ResultCard({
                     Kết quả bài làm
                 </span>
 
-                {/* Hiển thị số câu đúng */}
+                {/* Hiển thị điểm số & Số câu đúng */}
                 <h1 className="text-6xl font-extrabold text-[#1E3A8A] leading-none mb-2">
                     {correctCount}
                 </h1>
 
                 <span className="text-sm font-semibold text-slate-400 mb-4">
-                    / {totalCount} câu
+                    / {totalCount} câu ({score} điểm)
                 </span>
 
                 {/* Tag trạng thái Đạt / Không đạt */}
                 {isPassed ? (
-                    <div className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-600 font-bold text-xs px-4 py-1.5 rounded-full border border-emerald-150">
+                    <div className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-600 font-bold text-xs px-4 py-1.5 rounded-full border border-emerald-200">
                         <span>ĐẠT</span>
                     </div>
                 ) : (
-                    <div className="inline-flex items-center gap-1 bg-rose-50 text-rose-600 font-bold text-xs px-4 py-1.5 rounded-full border border-rose-150">
+                    <div className="inline-flex items-center gap-1 bg-rose-50 text-rose-600 font-bold text-xs px-4 py-1.5 rounded-full border border-rose-200">
                         <span>CHƯA ĐẠT</span>
                     </div>
                 )}
@@ -54,9 +56,9 @@ export default function ResultCard({
                         <span className="text-slate-800">{correctRatio}%</span>
                     </div>
                     {/* Thanh phần trăm */}
-                    <div className="w-full h-2.5 bg-slate-50 rounded-full overflow-hidden">
+                    <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
                         <div
-                            className="h-full bg-[#3A76F5] rounded-full"
+                            className="h-full bg-[#3A76F5] rounded-full transition-all duration-500"
                             style={{ width: `${correctRatio}%` }}
                         ></div>
                     </div>
@@ -66,12 +68,12 @@ export default function ResultCard({
                 <div className="space-y-3 pt-2 text-sm">
                     <div className="flex justify-between items-center">
                         <span className="text-slate-400">Câu đúng</span>
-                        <span className="font-bold text-slate-800">{correctCount} / {totalCount}</span>
+                        <span className="font-bold text-emerald-600">{correctCount} / {totalCount}</span>
                     </div>
 
                     <div className="flex justify-between items-center">
-                        <span className="text-slate-400">Câu sai</span>
-                        <span className="font-bold text-slate-800">{wrongCount} / {totalCount}</span>
+                        <span className="text-slate-400">Câu sai / Bỏ qua</span>
+                        <span className="font-bold text-rose-500">{wrongCount} / {totalCount}</span>
                     </div>
 
                     <div className="flex justify-between items-center">
@@ -89,24 +91,33 @@ export default function ResultCard({
             {/* Điều hướng trang */}
             <div className="mt-8 space-y-3">
                 {/* Button làm lại */}
-                <button onClick={onRetry}
-                    className="w-full border border-blue-100 bg-white text-[#3A76F5] py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-50/30 transition-colors">
-                    <ResetIcon className='h-5 w-5'></ResetIcon>
-                    <span>Làm lại</span>
-                </button>
+                {
+                    <button
+                        onClick={onRestart}
+                        className="w-full border border-blue-100 bg-white text-[#3A76F5] py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-blue-100">
+                        <ResetIcon className='h-5 w-5' />
+                        <span>Làm lại</span>
+                    </button>
+                }
 
                 {/* Button xem chi tiết đáp án */}
-                <button onClick={onViewDetails}
-                    className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white py-3.5 rounded-xl font-bold text-sm shadow-sm">
-                    Xem chi tiết đáp án
-                </button>
+                {
+                    <button
+                        onClick={onViewAnswer}
+                        className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white py-3.5 rounded-xl font-bold text-sm shadow-sm">
+                        Xem chi tiết đáp án
+                    </button>
+                }
 
                 {/* Button comeback ListQuiz */}
-                <button onClick={onBackToList}
-                    className="w-full bg-[#1D4ED8] hover:bg-[#1E40AF] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm">
-                    <ArrowIcon className='h-5 w-5 rotate-180'></ArrowIcon>
-                    <span>Quay lại danh sách</span>
-                </button>
+                {
+                    <button
+                        onClick={() => navigate("/quizzes")}
+                        className="w-full bg-[#1D4ED8] hover:bg-[#1E40AF] text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm ">
+                        <ArrowIcon className='h-5 w-5 rotate-180' />
+                        <span>Quay lại danh sách</span>
+                    </button>
+                }
             </div>
         </div>
     );

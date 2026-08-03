@@ -4,8 +4,12 @@ import { ClockIcon, InfoIcon } from "../icon";
 const Topbar = ({
   title = "Trang chủ",
   subtitle = "Xin chào,",
-  username = "Nguyễn Văn A"
 }) => {
+  // Lấy dữ liệu từ localStorage
+  const userRaw = localStorage.getItem('currentUser');
+  const savedUser = userRaw ? JSON.parse(userRaw) : null;
+  // Lấy username tại localStorage
+  const username = savedUser.fullName;
   return (
     <div className="w-full bg-white h-auto md:h-16 border-b border-gray-200 px-6 py-3 md:py-0 flex items-center justify-between gap-3 dynamic-topbar">
       <div className="flex flex-col justify-center min-w-0">

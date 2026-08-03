@@ -2,10 +2,11 @@ import React from 'react';
 
 export default function QuestionNavigator({
     total = 20,
-    currentIndex = 0,      
-    userAnswers = {},      
-    onSelectQuestion,      
-    onSubmit,             
+    currentIndex = 0,
+    userAnswers = {},
+    onSelectQuestion,
+    onSubmit,
+    isReview = false
 }) {
     // Đếm số câu đã làm
     const answeredCount = Object.keys(userAnswers).length;
@@ -70,11 +71,17 @@ export default function QuestionNavigator({
             </div>
 
             {/* Button submit */}
-            <button
-                onClick={onSubmit}
-                className="mt-6 w-full bg-[#10B981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-2xl font-bold transition-colors shadow-sm">
-                NỘP BÀI
-            </button>
+            {!isReview ?
+                <button
+                    onClick={onSubmit}
+                    className="mt-6 w-full bg-[#10B981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-2xl font-bold transition-colors shadow-sm">
+                    Nộp bài
+                </button> : <button
+                    onClick={onSubmit}
+                    className="mt-6 w-full bg-[#10B981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-2xl font-bold transition-colors shadow-sm">
+                    Trở lại
+                </button>
+            }
         </div>
     );
 }

@@ -132,6 +132,7 @@
       "lessonId": 1,
       "title": "HTML & CSS Quiz",
       "description": "Kiểm tra HTML và CSS cơ bản.",
+      "category": "Frontend",
       "difficulty": "Dễ",
       "timeLimit": 600,
       "totalQuestions": 5
@@ -141,6 +142,7 @@
       "lessonId": 2,
       "title": "ReactJS Quiz",
       "description": "Kiểm tra ReactJS.",
+      "category": "Frontend",
       "difficulty": "Trung bình",
       "timeLimit": 900,
       "totalQuestions": 5
@@ -150,6 +152,7 @@
       "lessonId": 4,
       "title": "NodeJS Quiz",
       "description": "Kiểm tra Express API.",
+      "category": "Backend",
       "difficulty": "Khó",
       "timeLimit": 900,
       "totalQuestions": 5

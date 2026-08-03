@@ -31,13 +31,7 @@ export default function App() {
         {/* Trang chủ Dashboard */}
         <Route
           path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <MainScreen />
-            </ProtectedRoute>
-          }
-        />
-
+          element={<ProtectedRoute><MainScreen /></ProtectedRoute>}/>
         <Route
           path="/lessons"
           element={<ProtectedRoute><ListLessons /></ProtectedRoute>}/>
@@ -51,7 +45,7 @@ export default function App() {
           path="/quiz/:id"
           element={<ProtectedRoute><DetailQuiz /></ProtectedRoute>}/>
         <Route
-          path="/result"
+          path="/result/:id"
           element={<ProtectedRoute><ResultPage /></ProtectedRoute>}/>
         <Route
           path="/profile"
