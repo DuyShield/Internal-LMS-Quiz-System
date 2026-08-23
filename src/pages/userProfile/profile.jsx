@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import ProfileHeader from "./profileHeader";
 import { getStatCards } from "../../compoments/card/statsCard";
 import { BookOpen, Clock3, Star } from "lucide-react";
-import EditProfileModal from './EditProfileModal';
-import ChangePasswordModal from './ChangePassModal';
+import EditProfileModal from './editProfileModal';
+import ChangePasswordModal from './changePassModal';
 import { changeProfile, changePass, getUserById } from '../../services/changeInfoService';
 
 export default function Profile() {
