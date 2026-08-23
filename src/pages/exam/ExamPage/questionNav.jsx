@@ -71,17 +71,12 @@ export default function QuestionNavigator({
             </div>
 
             {/* Button submit */}
-            {!isReview ?
-                <button
-                    onClick={onSubmit}
-                    className="mt-6 w-full bg-[#10B981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-2xl font-bold transition-colors shadow-sm">
-                    Nộp bài
-                </button> : <button
-                    onClick={onSubmit}
-                    className="mt-6 w-full bg-[#10B981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-2xl font-bold transition-colors shadow-sm">
-                    Trở lại
-                </button>
-            }
+            <button
+                onClick={onSubmit}
+                className="mt-6 w-full bg-[#10B981] hover:bg-[#059669] text-white py-3.5 px-4 rounded-2xl font-bold transition-colors shadow-sm">
+                {isReview ? "Trở lại" : "Nộp bài"}
+            </button>
+
         </div>
     );
 }

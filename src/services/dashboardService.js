@@ -1,6 +1,6 @@
 import api from "./api";
 
-export const getLessons = async () => {
+export const getQuizzesByUserId = async () => {
     const response = await api.get('/lessons');
     return response.data;
 }
